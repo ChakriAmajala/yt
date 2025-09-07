@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "mytube-frontend"
+        CONTAINER_NAME = "mytube-frontend-container"
+        PORT = "8003"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -11,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('mytube-frontend')
+                    sh "docker build -t ${IMAGE_NAME} ."
                 }
             }
         }
@@ -19,10 +25,10 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    // Stop existing container if running
-                    sh 'docker rm -f mytube-frontend-container || true'
+                    // Stop old container if running
+                    sh "docker rm -f ${CONTAINER_NAME} || true"
                     // Run new container
-                    sh 'docker run -d -p 8003:80 --name mytube-frontend-container mytube-frontend'
+                    sh "docker run -d -p ${PORT}:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}"
                 }
             }
         }
@@ -30,11 +36,10 @@ pipeline {
 
     post {
         success {
-            echo "Deployment successful! Open http://<Jenkins-Host>:8080"
+            echo "✅ Deployment Successful! Open http://<JENKINS_HOST>:${PORT}"
         }
         failure {
-            echo "Pipeline failed."
+            echo "❌ Pipeline Failed!"
         }
     }
 }
-
