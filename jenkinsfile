@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/YourUsername/YouTubeCloneFrontend.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build('mytube-frontend')
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Stop existing container if running
+                    sh 'docker rm -f mytube-frontend-container || true'
+                    // Run new container
+                    sh 'docker run -d -p 8003:80 --name mytube-frontend-container mytube-frontend'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Deployment successful! Open http://<Jenkins-Host>:8080"
+        }
+        failure {
+            echo "Pipeline failed."
+        }
+    }
+}
+
