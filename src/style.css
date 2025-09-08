@@ -1,38 +1,43 @@
-body {
+/* Reset */
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Navbar */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ff0000;
-  color: white;
+  background: #202020;
+  color: #fff;
   padding: 10px 20px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 
 header .logo {
+  font-size: 24px;
   font-weight: bold;
-  font-size: 20px;
 }
 
 header input {
-  width: 50%;
-  padding: 5px 10px;
-  border-radius: 2px;
+  width: 40%;
+  padding: 8px;
   border: none;
+  border-radius: 4px;
 }
 
 header .profile {
   font-size: 20px;
-  cursor: pointer;
 }
 
+/* Layout */
 .main {
   display: flex;
 }
@@ -40,60 +45,53 @@ header .profile {
 /* Sidebar */
 aside {
   width: 200px;
+  background: #f1f1f1;
   padding: 20px;
-  background-color: #fff;
-  height: calc(100vh - 50px);
-  position: sticky;
-  top: 50px;
+  min-height: 100vh;
 }
 
 aside ul {
   list-style: none;
-  padding: 0;
 }
 
-aside li {
+aside ul li {
   padding: 10px 0;
   cursor: pointer;
   font-size: 16px;
 }
 
-/* Video Grid */
+aside ul li:hover {
+  color: #ff0000;
+  font-weight: bold;
+}
+
+/* Video grid */
 #videoContainer {
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
   padding: 20px;
+  flex: 1;
 }
 
-.videoCard {
-  width: 300px;
-  background-color: #fff;
-  border-radius: 8px;
+.video-card {
+  background: #fff;
+  border-radius: 6px;
   overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s;
 }
 
-.videoCard img {
+.video-card:hover {
+  transform: scale(1.03);
+}
+
+.video-card img {
   width: 100%;
-  height: 170px;
-  object-fit: cover;
+  display: block;
 }
 
-.videoInfo {
+.video-card h3 {
   padding: 10px;
-}
-
-.videoInfo h4 {
-  margin: 0 0 5px 0;
   font-size: 16px;
 }
-
-.videoInfo p {
-  margin: 0;
-  color: gray;
-  font-size: 14px;
-}
-
