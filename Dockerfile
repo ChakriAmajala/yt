@@ -1,11 +1,11 @@
-# Base image
 FROM nginx:alpine
 
-# Copy all frontend code to nginx html folder
-COPY . /usr/share/nginx/html
+# Remove default nginx static assets
+RUN rm -rf /usr/share/nginx/html/*
 
-# Expose port 80 internally
+# Copy files from src folder into nginx html
+COPY src/ /usr/share/nginx/html/
+
 EXPOSE 80
 
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]
